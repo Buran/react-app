@@ -3,42 +3,42 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 
 module.exports = function (env, options) {
-    const mode = (env.production && 'production') || options.mode || 'production';
-    const specificConfig = require('./webpack/' + mode);
+  const mode = (env.production && 'production') || options.mode || 'production';
+  const specificConfig = require('./webpack/' + mode);
 
-    let config = {
-        context: path.join(__dirname, 'src'),
-        mode: mode,
-        devtool: 'none',
-        entry: './main.js',
+  let config = {
+    context: path.join(__dirname, 'src'),
+    mode: mode,
+    devtool: 'none',
+    entry: './main.js',
 
-        module: {
-            rules: [
-                {
-                    test: /\.js?$/,
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            babelrc: true
-                        }
-                    },
-                    exclude: /node_modules/
-                }
-            ]
-        },
+    module: {
+      rules: [
+        {
+          test: /\.js?$/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              babelrc: true
+            }
+          },
+          exclude: /node_modules/
+        }
+      ]
+    },
 
-        output: {
-            filename: 'bundle.js',
-            path: path.resolve(__dirname, 'dist')
-        },
-        plugins: [
-            new HtmlWebpackPlugin({
-                title: 'React Bootcamp',
-                hash: true,
-                template: path.resolve(__dirname, './src/index.html')
-            })
-        ]
-    };
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'React Bootcamp',
+        hash: true,
+        template: path.resolve(__dirname, './src/index.html')
+      })
+    ]
+  };
 
-    return merge(config, specificConfig);
+  return merge(config, specificConfig);
 };
