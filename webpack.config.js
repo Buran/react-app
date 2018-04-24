@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 
 module.exports = function (env, options) {
-  const mode = (env.production && 'production') || options.mode || 'production';
+  const mode = (env && env.production && 'production') || options.mode || 'production';
   const specificConfig = require('./webpack/' + mode);
 
   let config = {
