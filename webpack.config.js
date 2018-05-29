@@ -10,12 +10,12 @@ module.exports = function (env, options) {
     context: path.join(__dirname, 'src'),
     mode: mode,
     devtool: 'none',
-    entry: './main.js',
+    entry: './main.jsx',
 
     module: {
       rules: [
         {
-          test: /\.js?$/,
+          test: /\.jsx?$/,
           use: {
             loader: 'babel-loader',
             options: {
@@ -27,10 +27,15 @@ module.exports = function (env, options) {
       ]
     },
 
-    output: {
-      filename: 'bundle.js',
-      path: path.resolve(__dirname, 'dist')
+    resolve: {
+      extensions: ['.js', '.jsx']
     },
+
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: 'bundle.js'
+    },
+
     plugins: [
       new HtmlWebpackPlugin({
         title: 'React Bootcamp',

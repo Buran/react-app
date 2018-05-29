@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Kill Bill: vol. 2",
+    "id": 1,
+    "genre": "Action & adventures",
+    "release": "2004"
+  },
+  {
+    "title": "Kill Bill: vol. 1",
+    "id": 2,
+    "genre": "Action & adventures",
+    "release": "2003"
+  },
+  {
+    "title": "Pulp Fiction",
+    "id": 3,
+    "genre": "Oscar winning Movies",
+    "release": "1994"
+  },
+  {
+    "title": "Jackie Brown",
+    "id": 4,
+    "genre": "Dramas",
+    "release": "1997"
+  },
+  {
+    "title": "Reservoir Dogs",
+    "id": 5,
+    "genre": "Crime",
+    "release": "1992"
+  },
+  {
+    "title": "Four Rooms",
+    "id": 6,
+    "genre": "Comedies",
+    "release": "1995"
+  },
+  {
+    "title": "Django Unchained",
+    "id": 7,
+    "genre": "Dramas",
+    "release": "2012"
+  }
+]
