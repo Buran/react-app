@@ -9,7 +9,7 @@
     "build": "npx webpack",
     "build:development": "npx webpack --mode=development",
     "build:production": "npx webpack --env.production",
-    "server": "npx webpack-dev-server",
+    "server": "npx webpack-dev-server --mode=development",
     "test": "npx jest --no-cache"
   },
   "jest": {

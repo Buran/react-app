@@ -5,10 +5,12 @@ import List from "./Search/List";
 import Search from "./Header/Search";
 import Criteria from "./Header/Criteria";
 import Found from "./Header/Found";
+import MovieInfo from "./Movie/Info";
 import movies from "../data/movies.json";
 
 class App extends React.Component {
   state = {
+    currentMovie: 4,
     movies: movies,
     criteria: 'title',
     search: ''
@@ -43,9 +45,24 @@ class App extends React.Component {
     });
   }
 
+  followMainPage() {
+    this.setState({
+      currentMovie: false
+    });
+  }
+
   render() {
     if (this.state.error) {
         return <React.Fragment>Something went wrong.</React.Fragment>
+    }
+
+    if (this.state.currentMovie) {
+      const movieInfo = movies.reduce((prev, curr) => (curr.id === this.state.currentMovie) ? curr : prev);
+      return <React.Fragment>
+          <div onClick={this.followMainPage.bind(this)}>Search</div>
+          <MovieInfo info={movieInfo}/>
+          <List movies={movies.filter(info => info.genre === movieInfo.genre && info.id !== movieInfo.id)}/>
+        </React.Fragment>
     }
 
     return <React.Fragment>
