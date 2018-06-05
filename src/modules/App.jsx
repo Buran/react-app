@@ -88,7 +88,7 @@ class App extends React.Component {
         {['/search/:search/', '/search/', '/'].map((path, index) => (
           <Route path={path} key={index} render={props => (
             <React.Fragment>
-              <Search onSearch={this.search.bind(this, props.history)} val={props.match.params.search || ''}/>
+              <Search onSearch={this.search.bind(this, props.history)} value={props.match.params.search || ''}/>
               <Criteria criteria={this.state.criteria} onChange={this.setCriteria.bind(this)} />
               <Found value={this.movies.length}/>
               {this.movies.length ? <List movies={this.movies}/> : <NoResult/>}
