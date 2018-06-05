@@ -17,7 +17,7 @@ class Criteria extends React.Component {
   render() {
     return <React.Fragment>Search By
       {
-        ['title', 'genre'].map(name => (<label key={name}>
+        ['title', 'genres'].map(name => (<label key={name}>
               <input type="radio" value={name} onChange={this.onChange.bind(this)} checked={this.state.criteria === name}/>
               {name}
             </label>)

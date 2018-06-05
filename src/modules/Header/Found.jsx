@@ -10,11 +10,9 @@ class Found extends React.Component {
   render() {
     let amount;
     if (!this.props.value) {
-      amount = 'No';
-    } else {
-      amount = this.props.value;
+      return null;
     }
-    return <div>{amount} {this.props.value === 1 ? 'movie' : 'movies'} found</div>;
+    return <div>{this.props.value} {this.props.value === 1 ? 'movie' : 'movies'} found</div>;
   }
 }
 

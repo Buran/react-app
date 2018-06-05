@@ -3,7 +3,7 @@ import { render } from "react-dom";
 
 class Search extends React.Component {
   render() {
-    return <form>Find your movie <input name="search" onChange={this.props.onSearch}/></form>;
+    return <form>Find your movie <input name="search" defaultValue={this.props.val} onChange={this.props.onSearch}/></form>;
   }
 }
 
