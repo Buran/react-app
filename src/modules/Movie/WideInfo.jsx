@@ -1,37 +1,65 @@
 import React from "react";
 import { render } from "react-dom";
+import { withRouter } from 'react-router';
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import Genre from "./Genre";
 import Release from "./Release";
-import movies from "../../data/movies.json";
+import List from '../Search/List';
 
 class Info extends React.Component {
   state = {};
 
-  componentWillMount() {
+  searchSameGenre(genres) {
+    let qs = [];
+    let params = {
+      search: genres[0],
+      searchBy: 'genre',
+      limit: 50
+    };
+
     this.loading = true;
+
+    for (let name in params) {
+      if (params.hasOwnProperty(name)) {
+        qs.push(name + '=' + encodeURIComponent(params[name]));
+      }
+    }
+
+    fetch('http://react-cdp-api.herokuapp.com/movies/?' + qs.join('&')).then(data => {
+      return data.json();
+    }).then(json => {
+      this.loading = false;
+      console.log(json);
+      this.setState({
+        movies: json
+      });
+    });
+
+  }
+
+  componentDidMount() {
+    this.loading = true;
+
     fetch('http://react-cdp-api.herokuapp.com/movies/' + this.props.id).then(data => {
       return data.json();
     }).then(json => {
       this.loading = false;
-      this.setState({data: json});
+      this.setState(json);
+      console.log(json)
+      this.searchSameGenre(json.genres);
     });
   }
 
-  componentWillUnmount() {
-    //cancel request
-  }
-
   render() {
-    if (this.state.data) {
-      let info = this.state.data[0];
-      console.log(info)
+    if (this.state.id) {
+      let info = this.state;
       return <React.Fragment>
         <div><Thumbnail path={info.poster_path}/></div>
         <Title info={info.title}/>
         <Genre info={info.genres.join(', ')}/>
         <Release info={info.release}/>
+        {this.state.movies && this.state.movies.total ? <List movies={this.state.movies.data}/> : ''}
       </React.Fragment>;
     }
 
@@ -39,4 +67,4 @@ class Info extends React.Component {
   }
 }
 
-export default Info;
+export default withRouter(Info);
