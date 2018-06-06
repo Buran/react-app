@@ -30,7 +30,7 @@ class Info extends React.Component {
       return data.json();
     }).then(json => {
       this.loading = false;
-      console.log(json);
+      json.data = json.data.filter(info => info.id != this.props.id);
       this.setState({
         movies: json
       });
@@ -38,7 +38,7 @@ class Info extends React.Component {
 
   }
 
-  componentDidMount() {
+  loadMovieInfo() {
     this.loading = true;
 
     fetch('http://react-cdp-api.herokuapp.com/movies/' + this.props.id).then(data => {
@@ -49,6 +49,16 @@ class Info extends React.Component {
       console.log(json)
       this.searchSameGenre(json.genres);
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      this.loadMovieInfo();
+    }
+  }
+
+  componentDidMount() {
+    this.loadMovieInfo();
   }
 
   render() {
