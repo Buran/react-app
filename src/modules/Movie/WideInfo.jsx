@@ -18,8 +18,6 @@ class Info extends React.Component {
       limit: 50
     };
 
-    this.loading = true;
-
     for (let name in params) {
       if (params.hasOwnProperty(name)) {
         qs.push(name + '=' + encodeURIComponent(params[name]));
@@ -29,7 +27,6 @@ class Info extends React.Component {
     fetch('http://react-cdp-api.herokuapp.com/movies/?' + qs.join('&')).then(data => {
       return data.json();
     }).then(json => {
-      this.loading = false;
       json.data = json.data.filter(info => info.id != this.props.id);
       this.setState({
         movies: json
@@ -39,14 +36,10 @@ class Info extends React.Component {
   }
 
   loadMovieInfo() {
-    this.loading = true;
-
     fetch('http://react-cdp-api.herokuapp.com/movies/' + this.props.id).then(data => {
       return data.json();
     }).then(json => {
-      this.loading = false;
       this.setState(json);
-      console.log(json)
       this.searchSameGenre(json.genres);
     });
   }

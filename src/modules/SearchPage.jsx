@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { withRouter } from 'react-router';
 import NoResult from './Search/NoResult';
 import List from './Search/List';
@@ -13,7 +12,7 @@ class SearchPage extends React.Component {
     super(props);
     this.state = {
       criteria: 'title',
-      search: props.match.params.search || '',
+      search: '',
       movies: []
     };
   }
@@ -28,44 +27,37 @@ class SearchPage extends React.Component {
   }
 
   search(event) {
-    console.log(event.target.value)
     const search = event.target.value;
-    this.props.history.push('/search/' + search + '/');
+    this.props.history.push(search ? ('/search/' + search + '/') : '');
 
     if (search === 'stop-word') {
       throw new Error('You entered a word from stop list, application crashed!');
     }
 
-    this.setState({
-      search: search
-    });
-    this.searchMovies();
+    this.searchMovies(search, this.state.criteria);
   }
 
   setCriteria(value) {
-    console.log(this.state)
-    this.setState({
-      criteria: value
-    });
-    this.searchMovies();
+    console.log(value)
+    this.searchMovies(this.state.search, value);
   }
 
-  searchMovies() {
-    if (!this.state.search) {
+  searchMovies(search, criteria) {
+    if (!search) {
       this.setState({
-        movies: []
+        search: '',
+        criteria: criteria,
+        movies: { total: 0 }
       });
       return;
     }
 
     let qs = [];
     let params = {
-      search: this.state.search,
-      searchBy: this.state.criteria,
+      search: search,
+      searchBy: criteria,
       limit: 50
     };
-
-    this.loading = true;
 
     for (let name in params) {
       if (params.hasOwnProperty(name)) {
@@ -76,19 +68,16 @@ class SearchPage extends React.Component {
     fetch('http://react-cdp-api.herokuapp.com/movies/?' + qs.join('&')).then(data => {
       return data.json();
     }).then(json => {
-      this.loading = false;
-      console.log(json);
       this.setState({
+        search: search,
+        criteria: criteria,
         movies: json
       });
     });
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return this.state.search !== nextState.search || this.state.criteria !== nextState.criteria;
-  // }
   componentDidMount() {
-    this.searchMovies();
+    this.searchMovies(this.props.match.params.search, this.state.criteria);
   }
 
   render() {
@@ -97,7 +86,7 @@ class SearchPage extends React.Component {
     }
 
     return (<React.Fragment>
-      <Search onSearch={this.search.bind(this)} value={this.state.search}/>
+      <Search onSearch={this.search.bind(this)} value={this.props.match.params.search}/>
       <Criteria criteria={this.state.criteria} onChange={this.setCriteria.bind(this)} />
       <Found value={this.state.movies && this.state.movies.total}/>
       {this.state.movies && this.state.movies.total ? <List movies={this.state.movies.data}/> : <NoResult/>}

@@ -1,9 +1,16 @@
-import React from "react";
-import { render } from "react-dom";
+import React from 'react';
 
 class Search extends React.Component {
+  componentDidMount(){
+    this.input.focus();
+  }
+
   render() {
-    return <form>Find your movie <input name="search" defaultValue={this.props.value} onChange={this.props.onSearch}/></form>;
+    return <form>Find your movie <input name="search"
+                                        defaultValue={this.props.value}
+                                        onChange={this.props.onSearch}
+                                        ref={(input) => { this.input = input; }} />
+    </form>;
   }
 }
 
