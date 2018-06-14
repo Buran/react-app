@@ -4,5 +4,3 @@ import App from './modules/App';
 
 render(<App/>, document.getElementById('app'));
 
-// с.then(App => {
-// });

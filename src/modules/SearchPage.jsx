@@ -1,4 +1,5 @@
 import React from 'react';
+import { render } from "react-dom";
 import { withRouter } from 'react-router';
 import NoResult from './Search/NoResult';
 import List from './Search/List';
